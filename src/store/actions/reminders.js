@@ -4,6 +4,7 @@ import { uuid } from '../../utils';
 const createReminder = reminder => {
     const newReminder = {
         ...reminder,
+        text: reminder.text.replace(/\s+/g, ' ').trim(),
         id: uuid(),
     };
 
@@ -13,10 +14,15 @@ const createReminder = reminder => {
     };
 };
 
-const updateReminder = (id, modifiedReminder) => ({
-    type: UPDATE_REMINDER,
-    payload: { id, modifiedReminder },
-});
+const updateReminder = (id, modifiedReminder) => {
+    Object.assign(modifiedReminder, {
+        text: modifiedReminder.text.replace(/ +/g, ' '),
+    });
+    return {
+        type: UPDATE_REMINDER,
+        payload: { id, modifiedReminder },
+    };
+};
 
 const deleteReminder = id => ({
     type: DELETE_REMINDER,

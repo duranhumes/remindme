@@ -96,24 +96,16 @@ class Reminders extends React.Component {
          * and the current reminders datetime value
          */
         let { name, value } = e.currentTarget;
-        if (name === 'day' || name === 'time') {
-            if (name === 'day') {
-                const reminderTime = format(
-                    new Date(reminderDate),
-                    TIME_FORMAT,
-                );
-                value = new Date(`${value} ${reminderTime}`);
-            } else if (name === 'time') {
-                const reminderDay = format(new Date(reminderDate), DAY_FORMAT);
-                value = new Date(`${reminderDay} ${value}`);
-            }
-
+        if (name === 'day') {
+            const reminderTime = format(new Date(reminderDate), TIME_FORMAT);
+            value = new Date(`${value} ${reminderTime}`);
             name = 'date';
         }
 
-        // Trim whitespace from text string
-        if (name === 'text') {
-            value = value.replace(/\s+/g, ' ').trim();
+        if (name === 'time') {
+            const reminderDay = format(new Date(reminderDate), DAY_FORMAT);
+            value = new Date(`${reminderDay} ${value}`);
+            name = 'date';
         }
 
         Object.assign(reminder, { [name]: value });
@@ -128,7 +120,7 @@ class Reminders extends React.Component {
         const date = new Date(`${day} ${time}`);
         const newReminderData = {
             date,
-            text: text.replace(/\s+/g, ' ').trim(),
+            text,
             color,
         };
 
