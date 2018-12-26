@@ -54,7 +54,7 @@ class Reminders extends React.Component {
 
     handleReminderTextInput = ({ target: { value } }) => {
         this.setState({
-            text: value.replace(/\s+/g, ' ').trim(),
+            text: value,
             charactersLeft: MAX_CHARACTERS - value.length,
         });
     };
